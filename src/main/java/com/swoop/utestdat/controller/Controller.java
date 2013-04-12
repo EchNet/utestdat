@@ -1,6 +1,8 @@
 package com.swoop.utestdat.controller;
 
-import com.swoop.utestdat.data.*;
+import com.swoop.utestdat.data.TestCycleSource;
+import com.swoop.utestdat.data.TestTargetSource;
+import com.swoop.utestdat.data.TestHistorySource;
 import com.swoop.utestdat.model.TestTarget;
 import java.io.IOException;
 import java.util.Random;
@@ -10,8 +12,6 @@ import java.util.Set;
 
 public class Controller
 {
-	private static final int MAX_TRIALS = 100;
-
 	private TestCycleSource testCycleSource;
 	private TestTargetSource testTargetSource;
 	private TestHistorySource testHistorySource;
@@ -70,12 +70,11 @@ public class Controller
 		void pick()
 			throws IOException
 		{
-			double totalWeight = getTotalWeight();
-			int ntrials = 0;
-			while (result.size() < n && ntrials < MAX_TRIALS) {
-				double index = rand.nextDouble() * totalWeight;
-				result.add(indexByWeight(index));
-				++ntrials;
+			while (result.size() < n && testTargets.size() > 0) {
+				double weightedRandom = rand.nextDouble() * getTotalWeight();
+				int index = select(weightedRandom);
+				result.add(testTargets.get(index));
+				testTargets.remove(index);
 			}
 		}
 
@@ -98,18 +97,17 @@ public class Controller
 			return totalWeight;
 		}
 
-		private TestTarget indexByWeight(double index)
+		private int select(double weightedRandom)
 		{
-			double totalWeight = 0;
-			TestTarget target = null;
-			for (TestTarget tt : testTargets) {
-				totalWeight += tt.getWeight();
-				if (totalWeight > index) {
-					target = tt;
-					break;
+			double runningWeight = 0;
+			for (int i = 0; i < testTargets.size(); ++i) {
+				TestTarget tt = testTargets.get(i);
+				runningWeight += tt.getWeight();
+				if (runningWeight > weightedRandom) {
+					return i;
 				}
 			}
-			return target;
+			return -1;
 		}
 	}
 }

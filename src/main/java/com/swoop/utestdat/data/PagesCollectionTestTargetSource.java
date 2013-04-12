@@ -14,19 +14,6 @@ public class PagesCollectionTestTargetSource
 {
 	private final static double ACTIVITY_COEFFICIENT = 0.001;
 
-	// Source of supplemental domain ID => URL mapping.
-	private String resourcePath;
-
-	public String getResourcePath()
-	{
-		return resourcePath;
-	}
-
-	public void setResourcePath(String resourcePath)
-	{
-		this.resourcePath = resourcePath;
-	}
-
 	@Override
 	public List<TestTarget> getTestTargets()
 		throws IOException
