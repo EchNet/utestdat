@@ -3,9 +3,6 @@ package com.swoop.utestdat.data;
 import java.io.IOException;
 import net.ech.doc.Document;
 
-/*
- * Enable adjustment of weights depending on external JSON document.
- */
 abstract public class DocumentBasedDataSource
 {
 	private String key;
