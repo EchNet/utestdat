@@ -1,0 +1,20 @@
+{
+	"versionDoc": {
+		__type: "com.swoop.utestdat.data.CachedDocumentGetter",
+		key: "http://ardrone.swoop.com/"
+	},
+	"random": {
+		__type: "com.swoop.utestdat.controller.DefaultRandomNumberGenerator"
+	},
+	"testTargetList": {
+		__type: "com.swoop.utestdat.controller.DefaultTestTargetListGetter",
+		testTargetSource: {
+			__type: "com.swoop.utestdata.controller.TestTargetSource",
+			mongoPool: { __ref: "mongoPool" },
+			uri: "mongodb://spx-web:Axis0Awesome@ds033017-a0.mongolab.com:33017,ds033017-a1.mongolab.com:33017/dumptruck",
+			collection: "pages"
+		},
+		testHistorySource: {
+			__type: "
+		}
+	}

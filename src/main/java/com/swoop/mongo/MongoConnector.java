@@ -1,9 +1,10 @@
-package com.swoop.utestdat.data;
+package com.swoop.mongo;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.MongoException;
+import com.mongodb.MongoURI;
 import com.swoop.mongo.MongoCollectionAction;
 import com.swoop.mongo.MongoPool;
 import java.io.IOException;
@@ -15,6 +16,7 @@ public class MongoConnector
 {
 	private MongoPool mongoPool;
 	private String uri;
+	private String collection;
 
 	public MongoPool getMongoPool()
 	{
@@ -36,6 +38,16 @@ public class MongoConnector
 		this.uri = uri;
 	}
 
+	public String getCollection()
+	{
+		return collection;
+	}
+
+	public void setCollection(String collection)
+	{
+		this.collection = collection;
+	}
+
 	public Document findOne(final Map<String,Object> query)
 		throws IOException
 	{
@@ -47,7 +59,7 @@ public class MongoConnector
 	{
 		final StrongReference<Object> objRef = new StrongReference<Object>();
 
-		mongoPool.createCollection(uri).act(new MongoCollectionAction() {
+		mongoPool.createCollection(new MongoURI(uri), collection).act(new MongoCollectionAction() {
 			@Override
 			public void act(DBCollection dbc)
 				throws IOException, MongoException
@@ -70,7 +82,7 @@ public class MongoConnector
 	{
 		final StrongReference<Object> objRef = new StrongReference<Object>();
 
-		mongoPool.createCollection(uri).act(new MongoCollectionAction() {
+		mongoPool.createCollection(new MongoURI(uri), collection).act(new MongoCollectionAction() {
 			@Override
 			public void act(DBCollection dbc)
 				throws IOException, MongoException

@@ -1,9 +1,12 @@
 package com.swoop.utestdat.data;
 
+import com.swoop.service.Context;
 import java.io.IOException;
 import net.ech.doc.Document;
+import net.ech.doc.DocumentProducer;
 
-abstract public class DocumentBasedDataSource
+public class CachedDocumentGetter
+	implements Context.Getter<Document>, DocumentProducer
 {
 	private String key;
 	private DocumentCache documentCache;
@@ -28,9 +31,17 @@ abstract public class DocumentBasedDataSource
 		this.documentCache = documentCache;
 	}
 
-	protected Document getDocument()
+	@Override
+	public Document produce()
 		throws IOException
 	{
 		return getDocumentCache().getDocument(getKey());
+	}
+
+	@Override
+	public Document get(Context context, String key)
+		throws IOException
+	{
+		return produce();
 	}
 }
